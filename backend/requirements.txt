@@ -1,0 +1,28 @@
+# CampusCare Backend — Python Dependencies
+# Generated: 2026-09-25
+# Python 3.10+
+
+# -- Core Web Framework --------------------------------------------
+fastapi==0.141.1
+uvicorn==0.53.0
+starlette==1.7.0
+
+# -- Data Validation -----------------------------------------------
+pydantic==2.13.5
+pydantic_core==2.46.5
+python-multipart==0.0.32
+
+# -- Database (ORM + SQLite) ---------------------------------------
+SQLAlchemy==2.1.0
+
+# -- Async I/O -----------------------------------------------------
+anyio==4.15.1
+h11==0.16.0
+
+# -- HTTP Client (for integration tests / external calls) ----------
+httpx==0.28.1
+httpcore==1.0.9
+
+# -- Type Utilities ------------------------------------------------
+typing_extensions==4.16.0
+typing-inspection==0.4.4

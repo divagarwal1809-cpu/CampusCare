@@ -1,0 +1,454 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --color-critical: #e11d48;
+    --color-high: #d97706;
+    --color-medium: #0284c7;
+    --color-low: #059669;
+    --color-bg-primary: #f8fafc;
+    --color-bg-secondary: #ffffff;
+    --color-border: #e2e8f0;
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: #f8fafc;
+    color: #0f172a;
+    overflow-x: hidden;
+  }
+
+  * {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* ============================================================
+   CUSTOM SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* ============================================================
+   TACTICAL GRID & DOT BACKGROUND (LIGHT THEME)
+   ============================================================ */
+.tactical-grid {
+  background-color: #f8fafc;
+  background-image:
+    radial-gradient(rgba(100, 116, 139, 0.12) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* ============================================================
+   MODULAR BENTO TILES & CARDS
+   ============================================================ */
+.bento-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.bento-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.06), 0 10px 24px -4px rgba(15, 23, 42, 0.05);
+  transform: translateY(-2px);
+}
+
+.bento-card-interactive {
+  cursor: pointer;
+}
+.bento-card-interactive:active {
+  transform: translateY(0px) scale(0.995);
+}
+
+/* ============================================================
+   GLASSMORPHISM PANELS (LIGHT THEME)
+   ============================================================ */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+}
+
+.glass-panel-strong {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 12px 28px -4px rgba(15, 23, 42, 0.05);
+}
+
+/* ============================================================
+   PAGE TRANSITIONS (enter/leave animations)
+   ============================================================ */
+.page-enter {
+  animation: page-enter-anim var(--transition-normal) both;
+}
+@keyframes page-enter-anim {
+  from { opacity: 0; transform: translateY(16px) scale(0.99); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.slide-up {
+  animation: slide-up-anim var(--transition-normal) both;
+}
+@keyframes slide-up-anim {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fade-in-anim var(--transition-normal) both;
+}
+@keyframes fade-in-anim {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Staggered children */
+.stagger-children > * { animation: slide-up-anim 0.4s both; }
+.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
+.stagger-children > *:nth-child(2) { animation-delay: 60ms; }
+.stagger-children > *:nth-child(3) { animation-delay: 120ms; }
+.stagger-children > *:nth-child(4) { animation-delay: 180ms; }
+.stagger-children > *:nth-child(5) { animation-delay: 240ms; }
+.stagger-children > *:nth-child(6) { animation-delay: 300ms; }
+
+/* ============================================================
+   CARD HOVER ANIMATIONS
+   ============================================================ */
+.card-hover {
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px -8px rgba(0,0,0,0.5);
+}
+
+/* ============================================================
+   PRIORITY GLOW ANIMATIONS
+   ============================================================ */
+@keyframes border-glow-red {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(244, 63, 94, 0.25), 0 0 0 1px rgba(244, 63, 94, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 28px rgba(244, 63, 94, 0.55), 0 0 0 1px rgba(244, 63, 94, 0.65);
+  }
+}
+.animate-glow-critical { animation: border-glow-red 2s infinite ease-in-out; }
+
+@keyframes border-glow-amber {
+  0%, 100% { box-shadow: 0 0 12px rgba(245, 158, 11, 0.25); }
+  50%       { box-shadow: 0 0 28px rgba(245, 158, 11, 0.50); }
+}
+.animate-glow-high { animation: border-glow-amber 2.5s infinite ease-in-out; }
+
+@keyframes border-glow-cyan {
+  0%, 100% { box-shadow: 0 0 12px rgba(56, 189, 248, 0.2); }
+  50%       { box-shadow: 0 0 24px rgba(56, 189, 248, 0.45); }
+}
+.animate-glow-cyan { animation: border-glow-cyan 3s infinite ease-in-out; }
+
+/* ============================================================
+   RADAR / PING EFFECTS
+   ============================================================ */
+@keyframes radar-pulse {
+  0%   { transform: scale(0.8); opacity: 0.9; }
+  60%  { transform: scale(2.2); opacity: 0.2; }
+  100% { transform: scale(3.0); opacity: 0; }
+}
+.radar-ping { animation: radar-pulse 2s cubic-bezier(0, 0, 0.2, 1) infinite; }
+
+@keyframes radar-sweep {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.radar-sweep-effect { animation: radar-sweep 4s linear infinite; transform-origin: center; }
+
+/* ============================================================
+   LEAFLET TACTICAL MAP THEME
+   ============================================================ */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  background: #f1f5f9 !important;
+  border-radius: 0.75rem;
+  font-family: 'Inter', system-ui !important;
+}
+.carto-dark-boost .leaflet-tile {
+  filter: brightness(1.4) contrast(1.15) saturate(1.1);
+}
+.leaflet-popup-content-wrapper {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 0.75rem !important;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.12), 0 4px 6px -2px rgba(15, 23, 42, 0.04) !important;
+}
+.leaflet-popup-tip { background: #ffffff !important; }
+.leaflet-control-attribution { display: none !important; }
+
+/* ============================================================
+   PRIORITY SCALE BADGE (1-10 dial)
+   ============================================================ */
+.priority-dial {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+}
+
+/* ============================================================
+   SHIMMER / SKELETON LOADER
+   ============================================================ */
+@keyframes shimmer-move {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer-bar {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.15) 50%,
+    rgba(255,255,255,0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-move 2s infinite;
+}
+.skeleton {
+  background: linear-gradient(90deg, #0f172a 25%, #1e293b 50%, #0f172a 75%);
+  background-size: 400% 100%;
+  animation: shimmer-move 1.5s infinite;
+  border-radius: 4px;
+}
+
+/* ============================================================
+   PULSE BEACON
+   ============================================================ */
+@keyframes beacon-flash {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.35; transform: scale(0.9); }
+}
+.animate-beacon { animation: beacon-flash 1s infinite ease-in-out; }
+
+/* ============================================================
+   SCANLINE HUD
+   ============================================================ */
+.scanline {
+  position: relative;
+  overflow: hidden;
+}
+.scanline::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0, 0, 0, 0.15) 3px,
+    rgba(0, 0, 0, 0.15) 4px
+  );
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ============================================================
+   NUMBER COUNTER ANIMATION
+   ============================================================ */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.number-animate { animation: count-up 0.4s ease-out both; }
+
+/* ============================================================
+   ROLE SWITCH TOGGLE
+   ============================================================ */
+.role-toggle-track {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  padding: 3px;
+  gap: 2px;
+  cursor: pointer;
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.05);
+}
+.role-toggle-option {
+  position: relative;
+  z-index: 1;
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: color var(--transition-fast);
+  white-space: nowrap;
+}
+.role-toggle-option.active {
+  color: #ffffff;
+}
+.role-toggle-option:not(.active) {
+  color: #64748b;
+}
+.role-toggle-slider {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  border-radius: 999px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.15);
+  transition: all var(--transition-normal);
+}
+
+/* ============================================================
+   PROGRESS BAR ANIMATIONS
+   ============================================================ */
+@keyframes progress-fill {
+  from { width: 0%; }
+  to   { width: var(--target-width); }
+}
+.progress-animated {
+  animation: progress-fill 1s ease-out both;
+}
+
+/* ============================================================
+   STATUS PULSE DOT
+   ============================================================ */
+@keyframes status-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50%       { transform: scale(1.35); opacity: 0.7; }
+}
+.status-dot-live { animation: status-pulse 1.5s infinite ease-in-out; }
+
+/* ============================================================
+   MODAL ANIMATIONS
+   ============================================================ */
+@keyframes modal-enter {
+  from { opacity: 0; transform: scale(0.94) translateY(20px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+.modal-enter { animation: modal-enter 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+@keyframes overlay-enter {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.overlay-enter { animation: overlay-enter 0.2s ease both; }
+
+/* ============================================================
+   NAV TAB UNDERLINE ACTIVE INDICATOR
+   ============================================================ */
+.nav-tab-active {
+  position: relative;
+}
+.nav-tab-active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #38bdf8, #818cf8);
+  animation: fade-in-anim 0.2s ease;
+}
+
+/* ============================================================
+   INCIDENT CARD STATUS RING
+   ============================================================ */
+.status-ring-critical {
+  box-shadow: inset 0 0 0 1px rgba(244, 63, 94, 0.4), 0 0 20px rgba(244, 63, 94, 0.15);
+}
+.status-ring-high {
+  box-shadow: inset 0 0 0 1px rgba(245, 158, 11, 0.35), 0 0 16px rgba(245, 158, 11, 0.1);
+}
+
+/* ============================================================
+   FLOATING ACCENT ORBS (background decor)
+   ============================================================ */
+@keyframes float-orb {
+  0%, 100% { transform: translateY(0px) scale(1); opacity: 0.4; }
+  50%       { transform: translateY(-20px) scale(1.05); opacity: 0.65; }
+}
+.float-orb { animation: float-orb 8s ease-in-out infinite; pointer-events: none; }
+
+/* ============================================================
+   BUTTON INTERACTIONS
+   ============================================================ */
+.btn-primary {
+  background: linear-gradient(135deg, #0ea5e9, #6366f1);
+  color: white;
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 8px 20px;
+  font-size: 12px;
+  letter-spacing: 0.03em;
+  transition: all var(--transition-fast);
+  box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.45);
+}
+.btn-primary:active { transform: translateY(0); }
+
+.btn-danger {
+  background: linear-gradient(135deg, #f43f5e, #e11d48);
+  color: white;
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 8px 20px;
+  font-size: 12px;
+  transition: all var(--transition-fast);
+  box-shadow: 0 4px 15px rgba(244, 63, 94, 0.3);
+}
+.btn-danger:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(244, 63, 94, 0.45);
+}
+
+/* ============================================================
+   TOOLTIP
+   ============================================================ */
+[data-tooltip] {
+  position: relative;
+}
+[data-tooltip]::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #0f172a;
+  border: 1px solid #1e2d4a;
+  color: #cbd5e1;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+  z-index: 100;
+}
+[data-tooltip]:hover::before { opacity: 1; }
